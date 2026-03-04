@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="ThermoEase – Smart wearable dual-mode therapy device by Alien Healthcare. Drug-free, portable, medical-grade pain relief.">
+  <meta name="theme-color" content="#1b9b94">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>Alien Healthcare</title>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal:       #1b9b94;
+      --teal-dark:  #024854;
+      --teal-light: #3db5ac;
+      --black:      #000000;
+      --white:      #ffffff;
+      --gray-700:   #374151;
+      --gray-900:   #111827;
+      --font:       'M PLUS Rounded 1c', 'Helvetica Rounded', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; font-family: var(--font) !important; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: var(--white); color: var(--black); width: 100%; overflow-x: hidden; }
+    img  { display: block; max-width: 100%; }
+    a    { text-decoration: none; color: inherit; }
+
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem; z-index: 9999;
+      background: var(--teal); color: var(--white);
+      padding: 0.75rem 1.25rem; font-weight: 800; font-size: 0.85rem;
+      text-transform: uppercase; border-radius: 0 0 0.5rem 0.5rem; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; outline: 3px solid var(--black); outline-offset: 2px; }
+
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    .title-huge {
+      font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em;
+      line-height: 0.9; font-size: clamp(2.2rem, 10vw, 8rem);
+    }
+    .title-section {
+      font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
+      font-size: clamp(1rem, 3.5vw, 2rem);
+    }
+    .label-text { font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.65rem; }
+    .feature-card-text { font-weight: 900; font-size: clamp(1rem, 2.5vw, 1.5rem); line-height: 1.2; }
+
+    .section-padding { padding: clamp(3rem, 8vw, 8rem) clamp(1rem, 4vw, 5rem); }
+    .px-page { padding-left: clamp(1rem, 4vw, 2rem); padding-right: clamp(1rem, 4vw, 2rem); }
+
+    .nav {
+      position: fixed; top: 0; width: 100%; background: var(--white);
+      padding: 0 clamp(1rem, 4vw, 2rem); z-index: 50;
+      border-bottom: 2px solid var(--black); height: 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    @media (min-width: 640px) { .nav { height: 5rem; } }
+    .nav-links { display: none; gap: 1.5rem; }
+    @media (min-width: 1024px) { .nav-links { display: flex; } }
+    .nav-link {
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 0.65rem; color: #595959; transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link:focus-visible { color: var(--teal); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+
+    .btn-primary, .btn-secondary {
+      font-weight: 800; text-transform: uppercase; padding: 14px 24px; font-size: 11px;
+      text-align: center; display: inline-block;
+      transition: opacity 0.2s, background 0.2s, color 0.2s;
+      white-space: nowrap; cursor: pointer;
+      border-radius: clamp(1.5rem, 5vw, 4rem);
+      box-shadow: 8px 8px 0 0 #024854;
+    }
+    .btn-primary  { background: var(--black); color: var(--white); border: 4px solid var(--black); }
+    .btn-secondary { border: 4px solid var(--white); background: transparent; color: var(--white); }
+    .btn-primary:hover  { opacity: 0.82; }
+    .btn-secondary:hover { background: var(--white); color: var(--black); }
+
+    .hamburger {
+      display: flex; flex-direction: column; gap: 5px; justify-content: center;
+      align-items: center; width: 2.25rem; height: 2.25rem;
+      background: none; border: none; cursor: pointer; margin-left: 0.25rem;
+    }
+    @media (min-width: 1024px) { .hamburger { display: none; } }
+    .hamburger-bar { display: block; width: 22px; height: 2px; background: var(--black); transition: all 0.3s; }
+
+    #mobile-menu {
+      display: none; position: fixed; top: 4rem; left: 0; right: 0;
+      background: var(--white); border-bottom: 2px solid var(--black);
+      z-index: 40; flex-direction: column; padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    @media (min-width: 640px) { #mobile-menu { top: 5rem; } }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu .nav-link { display: block; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    #mobile-menu .nav-link:last-child { border-bottom: none; }
+
+    .hero-section {
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+      min-height: 80svh; display: flex; align-items: center;
+      padding-top: clamp(6rem, 14vw, 10rem);
+    }
+    .hero-ctas { display: flex; flex-direction: column; gap: 0.75rem; flex-wrap: wrap; }
+    @media (min-width: 640px) { .hero-ctas { flex-direction: row; } }
+
+    .pill { display: inline-block; border: 1px solid; border-radius: 9999px; padding: 0.35rem 1rem; }
+    .pill-white { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.9); }
+    .pill-teal  { border-color: var(--teal); color: var(--teal); }
+
+    .about-offset { margin-top: -3rem; position: relative; z-index: 10; margin-bottom: 4rem; }
+    @media (min-width: 640px) { .about-offset { margin-top: -4rem; } }
+
+    .card-box {
+      background: var(--white); border: 4px solid var(--black);
+      border-radius: clamp(1.5rem, 5vw, 4rem);
+      box-shadow: 8px 8px 0 0 rgba(0,0,0,1);
+      padding: clamp(1.5rem, 5vw, 4rem);
+    }
+    @media (min-width: 640px) { .card-box { box-shadow: 12px 12px 0 0 rgba(0,0,0,1); } }
+
+    .card-grid { display: grid; gap: 2rem; grid-template-columns: 1fr; }
+    @media (min-width: 1024px) {
+      .card-grid { grid-template-columns: 5fr 7fr; gap: 2.5rem; align-items: start; }
+    }
+    .space-y > * + * { margin-top: 1.25rem; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.75rem; padding-top: 0.5rem; }
+    .tag-chip {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(27,155,148,0.1); padding: 0.5rem 1rem;
+      border-radius: 0.75rem; border: 1px solid rgba(27,155,148,0.2);
+      font-size: 0.625rem; font-weight: 900; text-transform: uppercase;
+    }
+    .tag-chip svg { width: 1rem; height: 1rem; color: var(--teal); flex-shrink: 0; }
+
+    .problem-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px)  { .problem-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .problem-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .problem-card {
+      display: flex; flex-direction: column; border: 2px solid var(--black);
+      border-radius: 1.5rem; padding: clamp(1.5rem, 3vw, 2rem);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    @media (min-width: 640px) { .problem-card { border-radius: 20%; } }
+    @media (min-width: 1024px) {
+      .problem-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--teal); }
+    }
+    .icon-wrap {
+      display: flex; align-items: center; justify-content: center;
+      width: 2.5rem; height: 2.5rem; background: rgba(255,255,255,0.1);
+      border-radius: 0.5rem; flex-shrink: 0; margin-bottom: 1.25rem;
+    }
+    .icon-wrap svg { width: 1.25rem; height: 1.25rem; color: var(--white); }
+
+    .solution-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 1024px) { .solution-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    /* ── SOLUTION CARDS: same border style as .card-box ── */
+    .feature-card {
+      padding: clamp(1.25rem, 2vw, 1.5rem);
+      border: 4px solid var(--black);
+      border-radius: clamp(1.5rem, 5vw, 4rem);
+      box-shadow: 8px 8px 0 0 rgba(0,0,0,1);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      color: var(--white);
+    }
+    @media (min-width: 640px) { .feature-card { box-shadow: 12px 12px 0 0 rgba(0,0,0,1); } }
+    .feature-card:hover {
+      background: var(--black) !important;
+      transform: translateY(-2px);
+    }
+
+    .divider { height: 2px; background: rgba(0,0,0,0.05); border: none; width: 100%; }
+
+    .logo-nav {
+      height: 2rem; width: auto; object-fit: contain;
+      transform: scale(2.2); transform-origin: center left;
+    }
+    .logo-footer {
+      height: 2rem; width: auto; object-fit: contain;
+      transform: scale(2.2); transform-origin: center left;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-grid {
+      display: grid; gap: 2.5rem; grid-template-columns: 1fr;
+      padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+    .footer-meta { display: grid; gap: 2rem; grid-template-columns: repeat(2, 1fr); }
+
+    .social-btn {
+      width: 2.5rem; height: 2.5rem; border: 1px solid var(--white);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s; color: var(--white);
+    }
+    .social-btn:hover { background: var(--white); color: var(--black); }
+    .social-btn svg { width: 1rem; height: 1rem; }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#" aria-label="Alien Healthcare – home"
+      style="display:flex;align-items:center;height:100%;overflow:visible;padding-left:0.25rem;">
+      <img src="logonew.svg" alt="Alien Healthcare" class="logo-nav">
+    </a>
+    <div class="nav-links">
+      <a href="#about"    class="nav-link">About</a>
+      <a href="#problem"  class="nav-link">Problem</a>
+      <a href="#solution" class="nav-link">Solution</a>
+      <a href="#team"     class="nav-link">Team</a>
+    </div>
+    <div class="nav-right">
+      <a href="#contact" class="btn-primary" style="font-size:10px;padding:8px 14px;">Get in Touch</a>
+      <button id="hamburger" class="hamburger"
+        aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" role="region" aria-label="Mobile navigation">
+    <a href="#about"    class="nav-link" onclick="closeMobileMenu()">About</a>
+    <a href="#problem"  class="nav-link" onclick="closeMobileMenu()">Problem</a>
+    <a href="#solution" class="nav-link" onclick="closeMobileMenu()">Solution</a>
+    <a href="#team"     class="nav-link" onclick="closeMobileMenu()">Team</a>
+  </div>
+
+  <main id="main-content" tabindex="-1">
+
+    <!-- HERO -->
+    <section class="hero-section section-padding" aria-labelledby="hero-heading">
+      <div style="max-width:80rem;margin:0 auto;width:100%;">
+        <p class="label-text" style="margin-bottom:1.25rem;">
+          <span class="pill pill-white">Future of Recovery</span>
+        </p>
+        <h1 id="hero-heading" class="title-huge" style="color:var(--white);margin-bottom:1.5rem;">
+          Alien<br>Healthcare
+        </h1>
+        <p style="color:var(--white);font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;margin-bottom:2rem;max-width:36rem;line-height:1.4;">
+          One solution. All pain relief needs.<br>
+          <strong>No side effects. Medical grade.</strong>
+        </p>
+        <div class="hero-ctas">
+          <a href="#solution" class="btn-primary"  style="padding:16px 32px;">Explore Solution</a>
+          <a href="#contact"  class="btn-secondary" style="padding:16px 32px;">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-heading" class="about-offset px-page">
+      <div style="max-width:80rem;margin:0 auto;">
+        <div class="card-box">
+          <div class="card-grid">
+            <div>
+              <p class="label-text" style="color:var(--teal);margin-bottom:1.5rem;">
+                <span class="pill pill-teal">Who We Are</span>
+              </p>
+              <h2 id="about-heading" class="title-section"
+                style="font-size:clamp(1.8rem,5vw,3.75rem);line-height:1;margin-bottom:1rem;">
+                Nextgen<br>Healthcare<br>Company
+              </h2>
+            </div>
+            <div class="space-y">
+              <p style="font-size:clamp(1.1rem,2vw,1.5rem);line-height:1.3;font-weight:700;color:var(--gray-900);">
+                Alien Healthcare is a student-led startup redefining pain management through wearable technology.
+              </p>
+              <hr class="divider" aria-hidden="true">
+              <p style="color:var(--gray-700);line-height:1.65;font-size:clamp(0.9rem,1.5vw,1.125rem);">
+                Founded by <strong>Jinay Gala (B.Tech, Somaiya Vidyavihar University)</strong>, the venture began as an engineering project.
+              </p>
+              <p style="color:var(--gray-700);line-height:1.65;font-size:clamp(0.9rem,1.5vw,1.125rem);">
+                Pre-Incubated at <strong>RIIDL</strong>, we combine <em>embedded systems</em> and <em>design thinking</em> to create safe, portable, and drug-free recovery solutions.
+              </p>
+              <div class="tag-row">
+                <div class="tag-chip">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <path d="M15 2v2M9 2v2M2 15h2M2 9h2M15 20v2M9 20v2M20 15h2M20 9h2"/>
+                  </svg>
+                  Embedded Systems
+                </div>
+                <div class="tag-chip">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m15 5 4 4"/>
+                    <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/>
+                    <path d="m8 6 2-2"/>
+                    <path d="m2 22 5.5-1.5L21 7a2.12 2.12 0 0 0-3-3L4.5 17.5Z"/>
+                    <path d="m18 16 2-2"/>
+                    <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/>
+                  </svg>
+                  Design Thinking
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section id="problem" aria-labelledby="problem-heading"
+      class="section-padding" style="background:var(--teal);color:var(--white);">
+      <div style="max-width:80rem;margin:0 auto;">
+        <p class="label-text" style="margin-bottom:2rem;"></p>
+        <h2 id="problem-heading" class="title-huge" style="color:var(--white);margin-bottom:3rem;">
+          The Problem
+        </h2>
+        <div class="problem-grid">
+          <article class="problem-card" style="background:#024854;">
+            <div class="icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10 2h4"/><path d="M12 14v-4"/>
+                <path d="M4.6 11a8 8 0 1 0 15.8 3.4"/>
+                <path d="M15.2 5.5A8 8 0 0 1 19 9"/>
+                <path d="m2 2 20 20"/>
+              </svg>
+            </div>
+            <h3 style="font-size:clamp(0.9rem,1.5vw,1.25rem);font-weight:900;text-transform:uppercase;margin-bottom:0.5rem;">
+              Safety Concerns
+            </h3>
+            <p style="font-size:0.875rem;opacity:0.85;line-height:1.65;">
+               Lack of precision leads to guesswork. High risks of burns or frostbite for seniors or sensitive skin.
+            </p>
+          </article>
+
+          <article class="problem-card" style="background:var(--black);">
+            <div class="icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v4"/><path d="M12 16h.01"/>
+              </svg>
+            </div>
+            <h3 style="font-size:clamp(0.9rem,1.5vw,1.25rem);font-weight:900;text-transform:uppercase;margin-bottom:0.5rem;">
+              Inefficient &amp; Inconsistent
+            </h3>
+            <p style="font-size:0.875rem;opacity:0.85;line-height:1.65;">
+               Gel packs lose temperature within 15–20 minutes. Heating pads require a power source, limiting mobility.
+            </p>
+          </article>
+
+          <article class="problem-card" style="background:var(--black);">
+            <div class="icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m19 5 3-3"/><path d="m2 22 3-3"/>
+                <path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"/>
+                <path d="M7.5 13.5 10 11"/><path d="M10.5 16.5 13 14"/>
+                <path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"/>
+              </svg>
+            </div>
+            <h3 style="font-size:clamp(0.9rem,1.5vw,1.25rem);font-weight:900;text-transform:uppercase;margin-bottom:0.5rem;">
+              Limited Mobility
+            </h3>
+            <p style="font-size:0.875rem;opacity:0.85;line-height:1.65;">
+              No reliable, portable solution enables consistent therapy in real-world conditions.
+            </p>
+          </article>
+          <article class="problem-card" style="background:var(--teal-dark);">
+            <div class="icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 3h5v5"/><path d="M8 3H3v5"/>
+                <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/>
+                <path d="m15 9 6-6"/>
+              </svg>
+            </div>
+            <h3 style="font-size:clamp(0.9rem,1.5vw,1.25rem);font-weight:900;text-transform:uppercase;margin-bottom:0.5rem;">
+              Fragmented UX
+            </h3>
+            <p style="font-size:0.875rem;opacity:0.85;line-height:1.65;">
+              Users forced to choose between effectiveness, safety, or convenience. No tool integrates all three.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section id="solution" aria-labelledby="solution-heading"
+      class="section-padding" style="background:var(--white);">
+      <div style="max-width:80rem;margin:0 auto;">
+        <p class="label-text" style="color:var(--teal);margin-bottom:2rem;">
+          <span class="pill pill-teal">The Solution</span>
+        </p>
+        <h2 id="solution-heading" class="title-huge" style="margin-bottom:clamp(2.5rem,6vw,5rem);">
+          Introducing<br><span style="color:var(--teal-light);">ThermoEase</span>
+        </h2>
+        <div style="margin-bottom:clamp(3rem,6vw,5rem);max-width:42rem;">
+          <h3 class="title-section" style="font-size:clamp(1.25rem,3vw,1.875rem);margin-bottom:1.25rem;">
+            Active Therapy,<br>Zero Dependencies.
+          </h3>
+          <p style="color:var(--gray-700);line-height:1.65;font-size:clamp(1rem,1.5vw,1.125rem);">
+            Eliminates the need for freezers or microwaves. Our technology actively generates both heat and cold in a single wearable band.
+          </p>
+        </div>
+        <div class="solution-grid">
+          <div class="feature-card" style="background:var(--teal);">
+            <p class="feature-card-text">Dual-Mode Therapy</p>
+          </div>
+          <div class="feature-card" style="background:var(--teal-dark);">
+            <p class="feature-card-text">Smart Temperature Control</p>
+          </div>
+          <div class="feature-card" style="background:var(--teal);">
+            <p class="feature-card-text">Portable &amp; Rechargeable</p>
+          </div>
+          <div class="feature-card" style="background:var(--teal-dark);">
+            <p class="feature-card-text">Ergonomically Designed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" aria-labelledby="team-heading"
+      class="px-page" style="background:var(--teal-dark);padding-top:4rem;padding-bottom:4rem;">
+      <div style="max-width:80rem;margin:0 auto;">
+        <div class="card-box">
+          <div class="card-grid">
+            <div>
+              <p class="label-text" style="color:var(--teal);margin-bottom:1.5rem;">
+                <span class="pill pill-teal">The Founder</span>
+              </p>
+              <h2 id="team-heading" class="title-section"
+                style="font-size:clamp(1.8rem,5vw,3.75rem);line-height:1;margin-bottom:1rem;color:var(--black);">
+                Jinay<br>Chirag <br>Gala
+              </h2>
+            </div>
+            <div class="space-y">
+              <p style="font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700;color:var(--gray-900);">
+                B.Tech – EXTC (KJSSE)
+              </p>
+              <hr class="divider" aria-hidden="true">
+              <p style="color:var(--gray-700);line-height:1.65;font-size:clamp(0.9rem,1.5vw,1.125rem);">
+                Engineering a future where physical recovery is seamless and accessible to everyone. A B.Tech EXTC engineer from K.J. Somaiya School of Engineering, Jinay founded Alien Healthcare to solve a real, everyday problem — accessible, safe, and portable pain relief. Pre-incubated at RIIDL, the startup blends hardware innovation with thoughtful design.
+              </p>
+              <div class="tag-row">
+                <div style="display:flex;flex-direction:column;gap:0.25rem;background:rgba(27,155,148,0.1);padding:1rem 1.25rem;border-radius:0.75rem;border:1px solid rgba(27,155,148,0.2);">
+                  <span class="label-text" style="opacity:0.6;font-size:0.625rem;">Pre-incubated at</span>
+                  <span style="font-size:1.25rem;font-weight:900;color:var(--black);">RIIDL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="contact" aria-label="Contact and company info" style="background:var(--black);color:var(--white);">
+    <div style="max-width:80rem;margin:0 auto;padding:clamp(3rem,8vw,5rem) clamp(1rem,4vw,5rem) 0;">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div>
+          <div style="overflow:visible;padding-left:0.25rem;margin-bottom:1.5rem;">
+            <img src="ahl.svg" alt="Alien Healthcare" class="logo-footer">
+          </div>
+          <p style="color:rgba(255,255,255,0.4);font-size:0.8rem;line-height:1.7;max-width:22rem;margin-top:0.5rem;">
+            Redefining physical recovery through smart technology.<br>Based in Mumbai, India.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <span class="label-text" style="color:rgba(255,255,255,0.3);">Contact</span>
+          <a href="mailto:hello@alienhealthcare.in" aria-label="Email Alien Healthcare" style="display:inline-flex;align-items:center;gap:0.55rem;color:var(--white);font-size:0.82rem;font-weight:700;border:1px solid rgba(255,255,255,0.18);padding:0.55rem 1.1rem;border-radius:9999px;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)';this.style.background='transparent'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            hello@alienhealthcare.in
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:80rem;margin:0 auto;padding:1rem clamp(1rem,4vw,5rem);">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.75rem;">
+        <p class="label-text" style="color:rgba(255,255,255,0.22);font-size:0.58rem;">
+          © 2026 Alien Healthcare &nbsp;·&nbsp; All Rights Reserved
+        </p>
+        <address class="label-text" style="font-style:normal;color:rgba(255,255,255,0.22);font-size:0.58rem;">
+          RIIDL, Somaiya Vidyavihar, Mumbai
+        </address>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close navigation menu');
+      const first = mobileMenu.querySelector('a');
+      if (first) first.focus();
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open navigation menu');
+    }
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobileMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+  </script>
+</body>
+</html>
